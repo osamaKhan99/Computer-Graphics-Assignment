@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Calculator</title>
+</head>
+<link rel="stylesheet" href="./imgCalc.css"/>
+<script>
+    var loadFile = function(event) {
+        var img = document.getElementById("img1")
+        img.src = URL.createObjectURL(event.target.files[0])    
+    }
+    var loadFile2 = function(event){
+        var img2 = document.getElementById("img2")
+        img2.src = URL.createObjectURL(event.target.files[0])
+    }
+</script>
+
+<body>
+    <header>Basic Image Calculator</header>
+    <div class="grid">
+        <div class="left">
+            <div class="browse-btn">
+                <button class="btn1"><label class="btn-label" for="file">Load image 1</label></button>
+                <input type="file" accept="image/*" name="image" id="file" onchange ="loadFile(event)"  multiple style="display: none;"/>
+            </div>
+            <div>
+                <img id="img1"  width="200"/>
+            </div>
+            <div class="browse-btn2">
+                <button class="btn2"><label class="btn-label" for="file2">Load image 2</label></button>
+                <input type="file" accept="image/*" name="image" id="file2" onchange ="loadFile2(event)"  multiple style="display: none;"/>
+            </div>
+            <div>
+                <img id="img2" width="200"/>
+            </div>
+        </div>
+        <div class="middle">
+                <h2>Perform Any Of Following Operation</h2>
+                <button id="add" class="m-btn">Add Images</button>
+                <button id="sub"class="m-btn">Sub Images</button>
+                <button id="mul" class="m-btn">Mul Images</button>
+                <button id="div" class="m-btn">Div Images</button>
+        </div>
+        <div class="right">
+            <label id="r-label" style="display: none;" >Result</label>
+            <canvas id="result" height="800" width="400" ></canvas>
+        </div>
+    </div>
+    <footer>Created By Osama Waseem Azmat (B17101083)</footer>
+</body>
+<script lang="javascript" type="text/javascript">
+    var img1 = document.getElementById('img1')
+    var img02 = document.getElementById('img2')
+    var result = document.getElementById('result')
+    var context = result.getContext("2d");
+    var Add_btn = document.getElementById('add')
+    var res_lab = document.getElementById('r-label')
+    Add_btn.addEventListener("click",function(){
+        res_lab.style.display = 'block'
+        var w = 400;
+        var h = 800;
+
+        result.width = w;
+        result.height = h;
+
+        var pixels = 4 * w * h;
+        context.drawImage(img1, 0, 0,400,800);
+
+        var image1 = context.getImageData(0, 0, w, h);
+        var imageData1 = image1.data;
+        context.drawImage(img02, 0, 0,400,800);
+
+        var image2 = context.getImageData(0, 0, w, h);
+        var imageData2 = image2.data;
+
+        while (pixels--) {
+            imageData1[pixels] = imageData1[pixels] * 0.5 + imageData2[pixels] * 0.5;
+      }
+      image1.data = imageData1;
+      context.putImageData(image1, 0, 0);
+    })
+    var Sub_btn = document.getElementById('sub')
+    Sub_btn.addEventListener('click',function(){
+        var w = 400;
+        var h = 800;
+
+        result.width = w;
+        result.height = h;
+
+        var pixels = 4 * w * h;
+        context.drawImage(img1, 0, 0,400,800);
+
+        var image1 = context.getImageData(0, 0, w, h);
+        var imageData1 = image1.data;
+        context.drawImage(img02, 0, 0,400,800);
+
+        var image2 = context.getImageData(0, 0, w, h);
+        var imageData2 = image2.data;
+
+        while (pixels--) {
+         imageData1[pixels] = (imageData1[pixels] - 0.5) + (imageData2[pixels] - 0.5);
+      }
+      image1.data = imageData1;
+      context.putImageData(image1, 0, 0);
+    })
+    var mul_btn = document.getElementById('mul')
+    mul_btn.addEventListener('click', function(){
+       var w = 400;
+        var h = 800;
+
+        result.width = w;
+        result.height = h;
+
+        var pixels = 4 * w * h;
+        context.drawImage(img1, 0, 0,400,800);
+
+        var image1 = context.getImageData(0, 0, w, h);
+        var imageData1 = image1.data;
+        context.drawImage(img02, 0, 0,400,800);
+
+        var image2 = context.getImageData(0, 0, w, h);
+        var imageData2 = image2.data;
+
+        while (pixels--) {
+          imageData1[pixels] = (imageData1[pixels] + 0.5) * (imageData2[pixels] + 1);
+      }
+      image1.data = imageData1;
+      context.putImageData(image1, 0, 0);
+    })
+    var div_btn = document.getElementById('div')
+    div_btn.addEventListener('click', function(){
+       var w = 400;
+        var h = 800;
+
+        result.width = w;
+        result.height = h;
+
+        var pixels = 4 * w * h;
+        context.drawImage(img1, 0, 0,400,800);
+
+        var image1 = context.getImageData(0, 0, w, h);
+        var imageData1 = image1.data;
+        context.drawImage(img02, 0, 0,400,800);
+
+        var image2 = context.getImageData(0, 0, w, h);
+        var imageData2 = image2.data;
+
+        while (pixels--) {
+            imageData1[pixels] = (imageData1[pixels] / 0.8) + (imageData2[pixels] / 0.8);
+      }
+      image1.data = imageData1;
+      context.putImageData(image1, 0, 0);
+    })
+</script>
+</html>
